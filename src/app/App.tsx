@@ -2044,7 +2044,7 @@ function CategoriesSection() {
           <input
             value={newDesc}
             onChange={(e) => setNewDesc(e.target.value)}
-            placeholder="Descripción (opcional)…"
+            placeholder="Descripción…"
             className="font-opensans w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/25 transition-all"
           />
           {/* Image */}
