@@ -1237,7 +1237,7 @@ function TherapiesPage({ navigate }: { navigate: (p: Page) => void }) {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
           className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-0 rounded-3xl overflow-hidden border border-border bg-card">
           <div className="h-64 lg:h-full">
-            <img src={ofrecemos} alt="Terapias holísticas"
+            <img src={portada_terapias} alt="Terapias holísticas"
               className="w-full h-full object-cover" />
           </div>
           <div className="p-8 md:p-12 flex flex-col justify-center">
