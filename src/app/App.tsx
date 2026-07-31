@@ -20,6 +20,13 @@ import ofrecemos from "@/imports/IMG2.jpeg"
 import impi from "@/imports/IMPI-LOGO.jpg"
 import orgullo from "@/imports/Orgullo-Morelos-Optiprot-Logo-.png"
 import secturismo from "@/imports/secturismo.jpg"
+import tanatologico from "@/imports/terapias/Tanatologico.jpg"
+import acupuntura from "@/imports/terapias/Acupuntura.jpg"
+import auriculoterapia from "@/imports/terapias/Auriculoterapia.jpg"
+import masaje from "@/imports/terapias/Masaje.jpg"
+import corporales from "@/imports/terapias/Corporales.jpg"
+import faciales from "@/imports/terapias/Faciales.jpg"
+import portada_terapias from "@/imports/terapias/Terapias.jpg"
 
 import { productService, categoryService, authService, fileUrl } from "@/app/services/api";
 
@@ -112,16 +119,9 @@ const I = {
   hero: "https://images.unsplash.com/photo-1708667027894-6e9481ae1baf?w=1600&h=900&fit=crop&auto=format",
   about: "https://images.unsplash.com/photo-1647892702739-fd6cda128787?w=1200&h=700&fit=crop&auto=format",
   oilPlant: "https://images.unsplash.com/photo-1699373381616-6133334e754e?w=700&h=800&fit=crop&auto=format",
-  oilBlanket: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  facial: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  corporal: "https://img.magnific.com/foto-gratis/terapeuta-femenina-dando-tratamiento-reductor-reafirmante-cliente-centrandose-su-vientre_662251-2042.jpg",
   skincare: "https://images.unsplash.com/photo-1613803745799-ba6c10aace85?w=700&h=800&fit=crop&auto=format",
-  tanatologico: "https://images.pexels.com/photos/6134941/pexels-photo-6134941.jpeg",
   honeyDip: "https://images.unsplash.com/photo-1641878067318-1d1f79a77785?w=700&h=800&fit=crop&auto=format",
   candle1: "https://images.unsplash.com/photo-1636714507452-48716cfa1818?w=700&h=800&fit=crop&auto=format",
-  auriculoterapia: "https://plus.unsplash.com/premium_photo-1661869039200-0b1553ced257?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  masaje: "https://images.unsplash.com/photo-1519824145371-296894a0daa9?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  acupuntura: "https://images.unsplash.com/photo-1598555763574-dca77e10427e?q=80&w=1197&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 };
 
 const PLACEHOLDER_IMAGE =
@@ -173,53 +173,50 @@ interface Therapy {
   image: string;
 }
 
-// ⚠️ Reemplaza estas URLs por fotos reales de las terapias cuando las tengas
 const THERAPIES: Therapy[] = [
   {
     slug: "acupuntura",
     name: "Acupuntura",
     benefits: "Alivia dolores crónicos, mejora el sistema inmunológico y apoya el tratamiento de diversas enfermedades. Equilibra la energía vital, reduce el estrés y promueve una recuperación más natural y duradera.",
-    image: I.acupuntura,
+    image: acupuntura,
   },
   {
     slug: "masajes",
     name: "Masajes",
     benefits: "Relajan profundamente, liberan tensiones musculares y mejoran la circulación, proporcionando descanso y vitalidad inmediata.",
-    image: I.masaje,
+    image: masaje,
   },
   {
     slug: "auriculoterapia",
     name: "Auriculoterapia",
     benefits: "Estimula puntos clave en la oreja para equilibrar emociones, controlar ansiedad y favorecer hábitos saludables de manera natural.",
-    image: I.auriculoterapia,
+    image: auriculoterapia,
   },
   {
     slug: "tratamientos-faciales",
     name: "Tratamientos faciales",
     benefits: "La radiofrecuencia y microneedling reafirman la piel, reducen líneas de expresión y estimulan la producción de colágeno, logrando un rostro más luminoso y juvenil.",
-    image: I.facial,
+    image: faciales,
   },
   {
     slug: "tratamientos-corporales",
     name: "Tratamientos corporales",
     benefits: "Moldean la figura, mejoran la textura de la piel y ayudan a eliminar toxinas, ofreciendo resultados visibles y mayor confianza personal.",
-    image: I.corporal,
+    image: corporales,
   },
   {
     slug: "acompanamiento-tanatologico",
     name: "Acompañamiento tanatológico",
     benefits: "Brinda apoyo emocional en procesos de duelo, ayudando a encontrar paz, aceptación y fortaleza para seguir adelante.",
-    image: I.tanatologico,
+    image: tanatologico,
   },
 ];
 
-// Categoría "falsa" que siempre se muestra junto a las categorías reales del backend.
-// No existe en la BD: su uuid empieza con "mock-" y se detecta así en los onClick.
 const MOCK_THERAPY_CATEGORY: Category = {
   uuid: "mock-terapias-holisticas",
   name: "Terapias Holísticas",
   description: "Terapias que reconectan cuerpo, mente y energía",
-  image: I.oilBlanket, // reemplaza por la foto real del banner cuando la tengas
+  image: portada_terapias,
 };
 
 const isMockCategory = (uuid: string | null | undefined) => uuid === MOCK_THERAPY_CATEGORY.uuid;
