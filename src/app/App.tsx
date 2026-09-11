@@ -512,7 +512,7 @@ function ProductCard({ product, onClick }: { product: Product; onClick: () => vo
       <div className="p-5 flex flex-col flex-1">
         <p className="font-opensans text-[10px] tracking-[0.12em] uppercase text-muted-foreground mb-1.5 truncate">{firstCat?.name}</p>
         <h3 style={{ fontFamily: "'Roboto', sans-serif" }} className="text-base font-medium text-foreground mb-2 leading-snug">{product.name}</h3>
-        <p className="font-opensans text-xs text-muted-foreground leading-relaxed line-clamp-2 mb-4 flex-1">{product.description}</p>
+        <p className="font-opensans text-xs text-muted-foreground leading-relaxed line-clamp-2 mb-4 flex-1 whitespace-pre-line">{product.description}</p>
         <div className="flex items-center justify-between mt-auto">
           <span style={{ fontFamily: "'Roboto', sans-serif" }} className="text-base font-light text-primary">
             ${product.price.toLocaleString("es-MX")} <span className="text-xs text-muted-foreground font-normal">MXN</span>
@@ -1144,7 +1144,7 @@ function ProductPage({ product, navigate }: { product: Product; navigate: (p: Pa
               <CatIcon size={10} /> {firstCat?.name}
             </span>
             <h1 style={{ fontFamily: "'Roboto', sans-serif" }} className="text-3xl md:text-4xl font-light text-foreground mb-5 leading-tight">{product.name}</h1>
-            <p className="font-opensans text-sm text-muted-foreground leading-relaxed mb-7 pb-7 border-b border-border">{product.description}</p>
+            <p className="font-opensans text-sm text-muted-foreground leading-relaxed mb-7 pb-7 border-b border-border whitespace-pre-line">{product.description}</p>
 
             {/* Price */}
             <div className="mb-6">
@@ -1565,7 +1565,7 @@ function EditProductModal({ product, onSave, onClose }: {
           </div>
           <div>
             <label className="font-opensans text-[10px] tracking-[0.18em] uppercase text-foreground/55 block mb-1.5">Descripción</label>
-            <textarea rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={inputCls} />
+            <textarea rows={3} value={form.description} maxLength={2000} onChange={(e) => setForm({ ...form, description: e.target.value })} className={inputCls} />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -2038,11 +2038,13 @@ function CategoriesSection() {
               {addSaving ? <><div className="w-3 h-3 rounded-full border-2 border-white border-t-transparent animate-spin" /></> : <Plus size={13} />} Agregar
             </button>
           </div>
-          <input
+          <textarea
+            rows={3}
             value={newDesc}
             onChange={(e) => setNewDesc(e.target.value)}
-            placeholder="Descripción…"
-            className="font-opensans w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/25 transition-all"
+            placeholder="Descripción (opcional)…"
+            maxLength={1000}
+            className="font-opensans w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/25 transition-all resize-none"
           />
           {/* Image */}
           <div>
@@ -2130,11 +2132,13 @@ function CategoriesSection() {
                             }}
                             className="font-opensans w-full px-3 py-1.5 bg-background border border-primary/40 rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/25"
                           />
-                          <input
+                          <textarea
+                            rows={2}
                             value={editDesc}
                             onChange={(e) => setEditDesc(e.target.value)}
                             placeholder="Descripción…"
-                            className="font-opensans w-full px-3 py-1.5 bg-background border border-border rounded-lg text-xs text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/25"
+                            maxLength={1000}
+                            className="font-opensans w-full px-3 py-1.5 bg-background border border-border rounded-lg text-xs text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/25 resize-none"
                           />
                           {/* Edit image */}
                           <div className="flex items-center gap-2">
@@ -2178,7 +2182,7 @@ function CategoriesSection() {
                         <>
                           <p style={{ fontFamily: "'Roboto', sans-serif" }} className="text-sm font-medium text-foreground">{cat.name}</p>
                           {cat.description && (
-                            <p className="font-opensans text-[10px] text-muted-foreground mt-0.5 truncate">{cat.description}</p>
+                            <p className="font-opensans text-[10px] text-muted-foreground mt-0.5 line-clamp-2 whitespace-pre-line">{cat.description}</p>
                           )}
                           <p className="font-opensans text-[10px] text-muted-foreground mt-0.5">
                             {cat.count} {cat.count === 1 ? "producto" : "productos"}
@@ -2298,6 +2302,7 @@ function AddProductSection() {
     if (!f.name.trim()) e.name = "El nombre es requerido";
     if (selectedUuids.length === 0) e.categories = "Selecciona al menos una categoría";
     if (f.description.trim().length < 20) e.description = "Mínimo 20 caracteres";
+    else if (f.description.length > 2000) e.description = "Máximo 2000 caracteres";
     if (!f.price.trim() || isNaN(Number(f.price)) || Number(f.price) <= 0) e.price = "Ingresa un precio válido";
     return e;
   };
@@ -2415,8 +2420,8 @@ function AddProductSection() {
         <FormField label="Descripción" required error={touched.description ? errors.description : undefined} ok={!!(touched.description && !errors.description && form.description)}>
           <div className="relative">
             <textarea rows={4} placeholder="Describe el producto, sus características y origen…" value={form.description}
-              onChange={(e) => set("description", e.target.value)} onBlur={() => blur("description")} className={ic("description")} />
-            <span className="absolute bottom-3 right-3 font-opensans text-[10px] text-muted-foreground">{form.description.length}</span>
+              onChange={(e) => set("description", e.target.value)} onBlur={() => blur("description")} maxLength={2000} className={ic("description")} />
+            <span className="absolute bottom-3 right-3 font-opensans text-[10px] text-muted-foreground">{form.description.length}/2000</span>
           </div>
         </FormField>
 
